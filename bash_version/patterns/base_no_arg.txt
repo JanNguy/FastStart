@@ -1,0 +1,9 @@
+int __NAME__(void)
+{
+    return 1;
+}
+
+int main(void)
+{
+    return __NAME__();
+}

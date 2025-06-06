@@ -1,0 +1,6 @@
+/*
+** EPITECH PROJECT, __YEAR__
+** __NAME__
+** File description:
+** __NAME__.c
+*/

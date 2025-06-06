@@ -1,0 +1,9 @@
+int __NAME__(int ac, char **av)
+{
+    return 1;
+}
+
+int main(int ac, char **av)
+{
+    return __NAME__(ac, av);
+}
