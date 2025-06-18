@@ -1,5 +1,16 @@
 #!/bin/bash
 
+# Résolution du path réel même via lien symbolique
+
+SOURCE="${BASH_SOURCE[0]}"
+while [ -L "$SOURCE" ]; do
+  DIR="$(cd -P "$(dirname "$SOURCE")" && pwd)"
+  SOURCE="$(readlink "$SOURCE")"
+  [[ $SOURCE != /* ]] && SOURCE="$DIR/$SOURCE"
+done
+SCRIPT_DIR="$(cd -P "$(dirname "$SOURCE")" && pwd)"
+PATTERNS_DIR="$SCRIPT_DIR/patterns"
+
 # Initialisation des variables
 name=""
 help="FastStart help\n\nUsage: fastStart.sh [NAME OF THE PROJECT] [OPTIONS]"
@@ -95,17 +106,17 @@ mkdir -p src
 touch "src/$file"
 
 if [[ "$h_file" = true ]]; then
-    cat patterns/header.txt > "src/$file"
+    cat $PATTERNS_DIR/header.txt > "src/$file"
 fi
 
 if [[ "$arg" = true ]]; then
-    cat patterns/base_arg.txt >> "src/$file"
+    cat $PATTERNS_DIR/base_arg.txt >> "src/$file"
 else
-    cat patterns/base_no_arg.txt >> "src/$file"
+    cat $PATTERNS_DIR/base_no_arg.txt >> "src/$file"
 fi
 
 if [[ "$makef" = true ]]; then
-    cp patterns/makefile.txt Makefile
+    cp $PATTERNS_DIR/Makefile Makefile
     sed -i.bak "s/__NAME__/$name/g" Makefile && rm -f Makefile.bak
 fi
 
@@ -114,7 +125,7 @@ sed -i.bak "s/__NAME__/$name/g" "src/$file" && rm -f "src/$file.bak"
 if [[ "$h_file" = true ]]; then
     mkdir -p includes
     touch includes/my.h
-    cat patterns/header_file.txt > includes/my.h
+    cat $PATTERNS_DIR/header_file.txt > includes/my.h
     sed -i.bak "s/__NAME__/$name/g" includes/my.h && rm -f includes/my.h.bak
     sed -i.bak '1i\
 
@@ -155,3 +166,4 @@ if [[ "$git_init" = true ]]; then
 fi
 
 echo "Done"
+
