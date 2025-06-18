@@ -1,0 +1,35 @@
+##
+## EPITECH PROJECT, 2024
+## Makefile
+## File description:
+## Basic Makefile
+##
+
+
+# Variables
+CC = gcc
+CFLAGS = -Wall -Wextra -std=c99
+TARGET = __NAME__
+SOURCES = main.c
+OBJECTS = $(SOURCES:.c=.o)
+
+# Default target
+all: $(TARGET)
+
+# Build target
+NAME: $(OBJECTS)
+    $(CC) $(OBJECTS) -o $(TARGET)
+
+# Compile source files
+%.o: %.c
+    $(CC) $(CFLAGS) -c $< -o $@
+
+# Clean build files
+clean:
+    rm -f $(OBJECTS) $(TARGET)
+
+# Rebuild everything
+re: clean all
+
+# Phony targets
+.PHONY: all clean rebuild

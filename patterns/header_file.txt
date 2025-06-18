@@ -1,6 +1,6 @@
 #ifndef MY_H
     #define MY_H
 
-__NAME__(__ARGS__);
+int __NAME__(__ARGS__);
 
 #endif /* !MY_H */
